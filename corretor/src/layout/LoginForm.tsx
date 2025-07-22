@@ -13,7 +13,7 @@ export const LoginForm = () => {
   const handleSubmit = async () => {
     const success = await login(email, senha);
     if (success) {
-      navigate("/dashboard");
+      navigate("/home");
     }
   };
 

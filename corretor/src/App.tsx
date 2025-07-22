@@ -5,7 +5,7 @@ import EscolasPage from "./pages/EscolasPage";
 import { UsuariosPage } from "./pages/UsuariosPage";
 import { FiltroDashboardProvider } from "./hooks/useFiltroDashboard";
 import { useAuthContext } from "./context/AuthContext";
-
+import { LeituraQrCode } from "./pages/QrCodeReader";
 function App() {
   const { user } = useAuthContext();
 
@@ -31,6 +31,7 @@ function App() {
           </FiltroDashboardProvider>
         }
       />
+      <Route path="/leitura-qr" element={<LeituraQrCode />} />
 
       {/* Apenas ADMINISTRADOR e outros tipos (exceto GESTOR) */}
       {(isAdmin || !isGestor) && (
