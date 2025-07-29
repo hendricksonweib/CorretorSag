@@ -26,7 +26,7 @@ export const Header = () => {
 
   const navItems = [
     { name: "Home", path: "/Home", allowed: true },
-    { name: "Leitura de Qr code", path: "/leitura-qr", allowed: true },
+    { name: "Leitura de gabarito", path: "/leitura-de-gabarito", allowed: true },
     // { name: "Escolas", path: "/escolas", allowed: tipo !== "GESTOR" },
     // { name: "Turmas", path: "/turmas", allowed: tipo !== "GESTOR" },
     { name: "Alunos", path: "/alunos", allowed: tipo !== "GESTOR" },

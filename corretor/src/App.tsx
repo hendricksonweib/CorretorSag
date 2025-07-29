@@ -32,7 +32,7 @@ function App() {
           </FiltroDashboardProvider>
         }
       />
-      <Route path="/leitura-qr" element={<LeituraQrCode />} />
+      <Route path="/leitura-de-gabarito" element={<LeituraQrCode />} />
       <Route path="/alunos" element={<AlunosPage />} />
 
       {/* Apenas ADMINISTRADOR e outros tipos (exceto GESTOR) */}

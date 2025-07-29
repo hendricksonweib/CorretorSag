@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { IconButton } from "../components/IconButton";
 
 interface Turma {
   id: number;
@@ -30,7 +29,6 @@ interface AlunoListProps {
 export const AlunoList = ({
   reload,
   onReloadDone,
-  onEdit,
   searchNome,
   escolaId,
 }: AlunoListProps) => {
@@ -71,22 +69,6 @@ export const AlunoList = ({
     }
   }, [reload, onReloadDone]);
 
-  const handleDelete = async (id: number) => {
-    const confirmDelete = window.confirm("Deseja excluir este aluno?");
-    if (!confirmDelete) return;
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/alunos/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Erro ao excluir");
-
-      fetchAlunos();
-    } catch (err) {
-      alert("Erro ao excluir aluno");
-    }
-  };
 
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
@@ -111,10 +93,6 @@ export const AlunoList = ({
                 ID: {aluno.id} | Turma: {aluno.turma?.nome || "N/A"} | Escola: {aluno.escola?.nome || "N/A"}
               </p>
             </div>
-          </div>
-          <div className="flex gap-3">
-            <IconButton type="edit" onClick={() => onEdit?.(aluno.id)} />
-            <IconButton type="delete" onClick={() => handleDelete(aluno.id)} />
           </div>
         </div>
       ))}

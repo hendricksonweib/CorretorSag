@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 interface CreateAlunoModalProps {
   alunoId: number | null;
   onClose: () => void;
@@ -23,6 +23,7 @@ export const CreateAlunoModal = ({ alunoId, onClose, onSuccess }: CreateAlunoMod
   const [turmaId, setTurmaId] = useState<number | "">("");
   const [escolas, setEscolas] = useState<Escola[]>([]);
   const [loading, setLoading] = useState(false);
+const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEscolas = async () => {
@@ -63,7 +64,6 @@ export const CreateAlunoModal = ({ alunoId, onClose, onSuccess }: CreateAlunoMod
         setEscolaId(data.escola_id || "");
         setTurmaId(data.turma_id || "");
 
-        // Força atualização das turmas após obter a escola
         if (data.escola_id) {
           const turmasRes = await fetch(`${import.meta.env.VITE_API_URL}/api/turmas?escola_id=${data.escola_id}`);
           const turmasData = await turmasRes.json();
@@ -101,6 +101,7 @@ export const CreateAlunoModal = ({ alunoId, onClose, onSuccess }: CreateAlunoMod
       if (!res.ok) throw new Error("Erro ao salvar aluno");
 
       onSuccess();
+      navigate("/leitura-qr"); 
     } catch (err) {
       alert("Erro ao salvar aluno");
     } finally {
