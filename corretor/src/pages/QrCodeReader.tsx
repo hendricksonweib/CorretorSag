@@ -10,7 +10,7 @@ export const LeituraQrCode = () => {
       <main className="ml-60 transition-all duration-300 p-0">
         <div className="pt-10 p-12 bg-gray-100 min-h-screen space-y-10">
           <PageHeader
-            title="Leitura do QR Code"
+            title="Leitor"
             description="Utilize a câmera para identificar o aluno e a prova, ou faça a seleção manual."
           />
         <QrScanner/>

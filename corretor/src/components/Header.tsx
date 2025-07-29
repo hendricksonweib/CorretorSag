@@ -29,7 +29,7 @@ export const Header = () => {
     { name: "Leitura de Qr code", path: "/leitura-qr", allowed: true },
     // { name: "Escolas", path: "/escolas", allowed: tipo !== "GESTOR" },
     // { name: "Turmas", path: "/turmas", allowed: tipo !== "GESTOR" },
-    // { name: "Alunos", path: "/alunos", allowed: tipo !== "GESTOR" },
+    { name: "Alunos", path: "/alunos", allowed: tipo !== "GESTOR" },
     // { name: "Provas", path: "/provas", allowed: tipo !== "GESTOR" },
     // { name: "Gabaritos", path: "/gabaritos", allowed: tipo !== "GESTOR" },
     { name: "Usuários", path: "/usuarios", allowed: tipo === "ADMINISTRADOR" },

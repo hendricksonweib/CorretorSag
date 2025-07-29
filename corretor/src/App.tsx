@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { LoginPage } from "./pages/Login";
 import { Correcao } from "./pages/Correcao";
+import AlunosPage from "./pages/AlunosPage";
 import EscolasPage from "./pages/EscolasPage";
 import { UsuariosPage } from "./pages/UsuariosPage";
 import { FiltroDashboardProvider } from "./hooks/useFiltroDashboard";
@@ -32,6 +33,7 @@ function App() {
         }
       />
       <Route path="/leitura-qr" element={<LeituraQrCode />} />
+      <Route path="/alunos" element={<AlunosPage />} />
 
       {/* Apenas ADMINISTRADOR e outros tipos (exceto GESTOR) */}
       {(isAdmin || !isGestor) && (
