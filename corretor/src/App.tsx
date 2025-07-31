@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { LoginPage } from "./pages/Login";
 import { Correcao } from "./pages/Correcao";
 import AlunosPage from "./pages/AlunosPage";
-import EscolasPage from "./pages/EscolasPage";
 import { UsuariosPage } from "./pages/UsuariosPage";
 import { FiltroDashboardProvider } from "./hooks/useFiltroDashboard";
 import { useAuthContext } from "./context/AuthContext";
@@ -19,7 +18,7 @@ function App() {
   }
 
   const isAdmin = user.tipo_usuario === "ADMINISTRADOR";
-  const isGestor = user.tipo_usuario === "GESTOR";
+  // const isGestor = user.tipo_usuario === "GESTOR";
 
   return (
     <Routes>
@@ -36,11 +35,11 @@ function App() {
       <Route path="/alunos" element={<AlunosPage />} />
 
       {/* Apenas ADMINISTRADOR e outros tipos (exceto GESTOR) */}
-      {(isAdmin || !isGestor) && (
+      {/* {(isAdmin || !isGestor) && (
         <>
           <Route path="/escolas" element={<EscolasPage />} />
         </>
-      )}
+      )} */}
 
       {/* Só ADMINISTRADOR tem acesso a usuários */}
       {isAdmin && <Route path="/usuarios" element={<UsuariosPage />} />}

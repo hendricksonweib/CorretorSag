@@ -101,7 +101,7 @@ const navigate = useNavigate();
       if (!res.ok) throw new Error("Erro ao salvar aluno");
 
       onSuccess();
-      navigate("/leitura-qr"); 
+      navigate("/leitura-de-gabarito"); 
     } catch (err) {
       alert("Erro ao salvar aluno");
     } finally {
