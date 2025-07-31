@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 
+interface Escola {
+  id: number;
+  nome: string;
+}
+
 interface Turma {
   id: number;
   nome: string;
 }
 
-interface Escola {
+interface Prova {
   id: number;
   nome: string;
 }
@@ -13,15 +18,16 @@ interface Escola {
 interface Aluno {
   id: number;
   nome: string;
-  turma_id: number;
-  turma: Turma;
+  nota?: string;
   escola: Escola;
+  turma: Turma;
+  prova?: Prova;
+  data_realizacao?: string;
 }
 
 interface AlunoListProps {
   reload?: boolean;
   onReloadDone?: () => void;
-  onEdit?: (id: number) => void;
   searchNome: string;
   escolaId: number | null;
 }
@@ -39,9 +45,7 @@ export const AlunoList = ({
 
   const fetchAlunos = async () => {
     try {
-      const queryParams = new URLSearchParams({
-        page: String(page),
-      });
+      const queryParams = new URLSearchParams({ page: String(page) });
 
       if (searchNome.trim() !== "") queryParams.append("nome", searchNome);
       if (escolaId !== null) queryParams.append("escola_id", String(escolaId));
@@ -69,47 +73,47 @@ export const AlunoList = ({
     }
   }, [reload, onReloadDone]);
 
-
   return (
     <div className="bg-white rounded-xl shadow overflow-hidden">
-      <div className="px-5 py-3 bg-blue-50 border-b border-gray-200 font-semibold text-sm text-gray-800">
-        Mostrando página <strong>{page}</strong> de <strong>{totalPages}</strong> - Total: {totalItems} alunos
+      <div className="px-6 py-4 bg-blue-50 border-b text-sm text-gray-800 font-medium">
+        Página <strong>{page}</strong> de <strong>{totalPages}</strong> — Total: {totalItems} alunos
       </div>
 
-      {alunos.map((aluno) => (
-        <div
-          key={aluno.id}
-          className="flex items-center justify-between px-5 py-4 border-b border-gray-100 hover:bg-gray-50 transition duration-150"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">
-              👨‍🎓
-            </div>
-            <div>
-              <p className="text-blue-700 font-semibold hover:underline cursor-pointer">
-                {aluno.nome}
-              </p>
-              <p className="text-sm text-gray-500">
-                ID: {aluno.id} | Turma: {aluno.turma?.nome || "N/A"} | Escola: {aluno.escola?.nome || "N/A"}
-              </p>
-            </div>
-          </div>
-        </div>
-      ))}
+      <table className="min-w-full text-sm">
+        <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
+          <tr>
+            <th className="px-6 py-3 text-left">Nome</th>
+            <th className="px-6 py-3 text-center">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          {alunos.map((aluno) => (
+            <tr
+              key={aluno.id}
+              className="bg-gray-50 hover:bg-gray-100 transition-all duration-200"
+            >
+              <td className="px-6 py-3 text-gray-800">{aluno.nome}</td>
+              <td className="px-6 py-3 text-center font-semibold text-green-700 text-base">
+                {aluno.nota && aluno.nota !== "S/N" ? aluno.nota : ""}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-      <div className="flex justify-between items-center px-5 py-3 bg-gray-50 text-sm text-gray-600 border-t border-gray-200">
+      <div className="flex justify-between items-center px-6 py-4 bg-gray-50 border-t text-sm text-gray-600">
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 1))}
           disabled={page === 1}
-          className="px-3 py-1 rounded border text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+          className="px-3 py-1 rounded border hover:bg-gray-100 disabled:opacity-40"
         >
           &lt;
         </button>
-        <span className="px-3 py-1 bg-blue-600 text-white rounded">{page}</span>
+        <span className="font-medium text-gray-700">{page}</span>
         <button
           onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
           disabled={page === totalPages}
-          className="px-3 py-1 rounded border text-gray-600 hover:bg-gray-100 disabled:opacity-40"
+          className="px-3 py-1 rounded border hover:bg-gray-100 disabled:opacity-40"
         >
           &gt;
         </button>

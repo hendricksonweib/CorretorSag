@@ -19,11 +19,6 @@ export default function AlunosPage() {
     setReload(true);
   };
 
-  const handleEdit = (id: number) => {
-    setEditId(id);
-    setShowModal(true);
-  };
-
   const handleFilter = (nome: string, escolaId: number | null) => {
     setSearchNome(nome);
     setEscolaId(escolaId);
@@ -49,7 +44,6 @@ export default function AlunosPage() {
         <AlunoList
           reload={reload}
           onReloadDone={() => setReload(false)}
-          onEdit={handleEdit}
           searchNome={searchNome}
           escolaId={escolaId}
         />
