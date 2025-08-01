@@ -7,7 +7,6 @@ export const QrScanner = () => {
   const [qrResult, setQrResult] = useState<string | null>(null);
   const [scannerActive, setScannerActive] = useState(false);
 
-  // Inicia scanner após o DOM renderizar o elemento com id correto
   useEffect(() => {
     if (!scannerActive) return;
 
@@ -18,7 +17,7 @@ export const QrScanner = () => {
 
         await scanner.start(
           { facingMode: "environment" },
-          { fps: 10, qrbox: 250 },
+          { fps: 10, qrbox: { width: 200, height: 200 } },
           (decodedText) => {
             setQrResult(decodedText);
             scanner.stop().catch(console.error);
@@ -50,7 +49,7 @@ export const QrScanner = () => {
   };
 
   return (
-    <div className="relative w-full max-w-xl mx-auto h-[500px] bg-black rounded-xl overflow-hidden">
+    <div className="relative w-full max-w-[90vw] sm:max-w-xl mx-auto h-[70vw] sm:h-[500px] bg-black rounded-xl overflow-hidden">
       {/* Scanner ativo */}
       {scannerActive && <div id={qrRegionId} className="w-full h-full" />}
 
@@ -62,7 +61,7 @@ export const QrScanner = () => {
 
           {/* moldura azul */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="w-64 h-64 border-4 border-blue-500 rounded-lg" />
+            <div className="w-40 h-40 sm:w-64 sm:h-64 border-4 border-blue-500 rounded-lg" />
           </div>
 
           {/* botão fechar */}
@@ -77,8 +76,10 @@ export const QrScanner = () => {
 
       {/* Iniciar scanner */}
       {!scannerActive && (
-        <div className="flex flex-col items-center justify-center h-full text-center text-white">
-          <p className="mb-4 text-lg">Clique para iniciar a leitura do QR Code</p>
+        <div className="flex flex-col items-center justify-center h-full text-center text-white px-4">
+          <p className="mb-4 text-base sm:text-lg">
+            Clique para iniciar a leitura do QR Code
+          </p>
           <button
             onClick={() => setScannerActive(true)}
             className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
