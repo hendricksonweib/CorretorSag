@@ -24,7 +24,7 @@ export const Correcao = () => {
       document.body.appendChild(a);
       a.click();
       a.remove();
-      window.URL.revokeObjectURL(url); // limpa a memória
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
       alert("Erro ao exportar o arquivo");
@@ -34,11 +34,19 @@ export const Correcao = () => {
   return (
     <>
       <Header />
-      <main className="ml-60 transition-all duration-300 p-0">
-        <div className="pt-10 p-12 bg-gray-100 min-h-screen">
+      <main className="pt-16 lg:pt-0 lg:ml-60 transition-all duration-300">
+        <div className="p-6 md:p-12 bg-gray-100 min-h-screen">
           <PageHeader
             title="Correção"
             description="Tela de Envio de PDF para Correção"
+            action={
+              <button
+                onClick={handleExport}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+              >
+                Exportar XLSX
+              </button>
+            }
           />
           <PdfUploader />
         </div>

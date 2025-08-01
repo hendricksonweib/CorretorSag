@@ -27,29 +27,29 @@ export default function AlunosPage() {
   return (
     <>
       <Header />
-       <main className="ml-60 transition-all duration-300 p-0">
-      <div className="pt-10 p-12 bg-gray-100 min-h-screen space-y-10">
-        <PageHeader
-          title="Alunos"
-          description="Gerenciamento de alunos"
-          actionLabel="Novo Aluno"
-          onActionClick={() => {
-            setEditId(null);
-            setShowModal(true);
-          }}
-        />
+      <main className="pt-16 lg:pt-0 lg:ml-60 transition-all duration-300">
+        <div className="p-6 md:p-12 bg-gray-100 min-h-screen space-y-10">
+          <PageHeader
+            title="Alunos"
+            description="Gerenciamento de alunos"
+            actionLabel="Novo Aluno"
+            onActionClick={() => {
+              setEditId(null);
+              setShowModal(true);
+            }}
+          />
 
-        <AlunoFilter onFilter={handleFilter} />
+          <AlunoFilter onFilter={handleFilter} />
 
-        <AlunoList
-          reload={reload}
-          onReloadDone={() => setReload(false)}
-          searchNome={searchNome}
-          escolaId={escolaId}
-        />
-      </div>
+          <AlunoList
+            reload={reload}
+            onReloadDone={() => setReload(false)}
+            searchNome={searchNome}
+            escolaId={escolaId}
+          />
+        </div>
+      </main>
 
-       </main>
       {showModal && (
         <CreateAlunoModal
           alunoId={editId}
