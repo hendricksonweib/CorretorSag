@@ -39,14 +39,6 @@ export const Correcao = () => {
           <PageHeader
             title="Correção"
             description="Tela de Envio de PDF para Correção"
-            action={
-              <button
-                onClick={handleExport}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-              >
-                Exportar XLSX
-              </button>
-            }
           />
           <PdfUploader />
         </div>
