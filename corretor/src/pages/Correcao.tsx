@@ -2,7 +2,6 @@ import { Header } from "../components/Header";
 import { PageHeader } from "../ui/PageHeader";
 import { PdfUploader } from "../ui/PdfUploader";
 
-const EXPORT_URL = `${import.meta.env.VITE_API_URL}/api/dashboard/export-xlsx`;
 
 export const Correcao = () => {
   
