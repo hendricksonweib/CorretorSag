@@ -6,11 +6,13 @@ export const QrScanner = () => {
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const [qrResult, setQrResult] = useState<string | null>(null);
   const [scannerActive, setScannerActive] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!scannerActive) return;
 
     const startScanner = async () => {
+      setLoading(true);
       try {
         const scanner = new Html5Qrcode(qrRegionId);
         scannerRef.current = scanner;
@@ -20,14 +22,14 @@ export const QrScanner = () => {
           { fps: 10, qrbox: { width: 200, height: 200 } },
           (decodedText) => {
             setQrResult(decodedText);
-            scanner.stop().catch(console.error);
-            setScannerActive(false);
+            stopScanner(); 
           },
           () => {}
         );
       } catch (err) {
         console.error("Erro ao iniciar scanner:", err);
         setScannerActive(false);
+        setLoading(false);
       }
     };
 
@@ -41,6 +43,7 @@ export const QrScanner = () => {
   }, [scannerActive]);
 
   const stopScanner = async () => {
+    setLoading(false);
     if (scannerRef.current) {
       await scannerRef.current.stop().catch(console.error);
       scannerRef.current = null;
@@ -50,16 +53,19 @@ export const QrScanner = () => {
 
   return (
     <div className="relative w-full max-w-[90vw] sm:max-w-xl mx-auto h-[70vw] sm:h-[500px] bg-black rounded-xl overflow-hidden">
-      {/* Scanner ativo */}
-      {scannerActive && <div id={qrRegionId} className="w-full h-full" />}
+   
+      {scannerActive && !loading && <div id={qrRegionId} className="w-full h-full" />}
 
-      {/* Moldura e botões */}
-      {scannerActive && (
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white">
+          <p>Carregando câmera...</p>
+        </div>
+      )}
+
+      {scannerActive && !loading && (
         <>
-          {/* overlay escuro */}
           <div className="absolute inset-0 bg-black bg-opacity-40 pointer-events-none" />
 
-          {/* moldura azul */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="w-40 h-40 sm:w-64 sm:h-64 border-4 border-blue-500 rounded-lg" />
           </div>
@@ -84,12 +90,11 @@ export const QrScanner = () => {
             onClick={() => setScannerActive(true)}
             className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition"
           >
-            📷 Iniciar Scanner
+           Iniciar Scanner
           </button>
         </div>
       )}
 
-      {/* Resultado */}
       {qrResult && (
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-black bg-opacity-70 px-6 py-2 rounded-full text-sm">
           Código detectado: {qrResult}
