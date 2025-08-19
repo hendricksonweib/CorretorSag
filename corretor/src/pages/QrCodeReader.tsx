@@ -1,6 +1,5 @@
 import { Header } from "../components/Header";
 import { PageHeader } from "../ui/PageHeader";
-import { QrScanner } from "../components/QrScanner";
 
 export const LeituraQrCode = () => {
   return (
