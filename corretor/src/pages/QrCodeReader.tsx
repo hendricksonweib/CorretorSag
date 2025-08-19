@@ -12,7 +12,7 @@ export const LeituraQrCode = () => {
             title="Leitor"
             description="Utilize a câmera para identificar o aluno e a prova, ou faça a seleção manual."
           />
-          <QrScanner />
+          
         </div>
       </main>
     </>
