@@ -1,20 +1,36 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import CompressionPlugin from "vite-plugin-compression";
+import Inspect from "vite-plugin-inspect";
 
-// https://vite.dev/config/
+// Configuração do Vite
 export default defineConfig({
-  plugins: [tailwindcss(), react()],
+  plugins: [
+    tailwindcss(),
+    react(),
+    CompressionPlugin({
+      algorithm: 'gzip', // Ou 'brotliCompress', para melhor compressão
+      threshold: 10240,  // Arquivos com mais de 10 KB serão comprimidos
+    }),
+    Inspect(), // Plugin para inspecionar as dependências e ver quais estão pesadas
+  ],
   build: {
-    // Ajusta o limite de tamanho dos chunks para evitar o aviso
-    chunkSizeWarningLimit: 1000, // Aumente para 1000 KB ou mais se necessário
+    // Ajusta o limite de tamanho dos chunks
+    chunkSizeWarningLimit: 1000,  // Limite de 1000KB para os chunks antes de exibir um aviso
 
-    // Opções do Rollup para controle manual de chunks
     rollupOptions: {
       output: {
+        // Divisão manual dos chunks
         manualChunks(id) {
           if (id.includes('node_modules')) {
             return 'vendor';  // Dependências de node_modules irão para 'vendor.js'
+          }
+          if (id.includes('react-router')) {
+            return 'react-router';  // Se houver React Router, separa em outro chunk
+          }
+          if (id.includes('lodash')) {
+            return 'lodash';  // Se houver lodash, separa em outro chunk
           }
         }
       }
